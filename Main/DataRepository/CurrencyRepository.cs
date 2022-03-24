@@ -2,8 +2,14 @@
 
 namespace Main.DataRepository
 {
+    /// <summary>
+    /// Класс предоставления доступа к хранилищу валют
+    /// </summary>
     public class CurrencyRepository : ICurrencyRepository
     {
+        /// <summary>
+        /// Получить стоимость покупки/продажи валюты на бирже за указанную валюту
+        /// </summary>
         public double GetRateForCurrency(CurrencyEnum stockCurrency, CurrencyEnum personCurrency)
         {
             var data = InlineData.GetCurrencyValues();

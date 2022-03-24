@@ -2,6 +2,9 @@
 
 namespace Main.ParseService
 {
+    /// <summary>
+    /// Атрибут псевдонима
+    /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Class, AllowMultiple = true)]
     public class AliasAttribute : Attribute
     {

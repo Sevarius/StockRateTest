@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Main.WriteService.Writers
 {
+    /// <summary>
+    /// Писатель в консоль
+    /// </summary>
     public class ConsoleWriter : IWriter
     {
         private static readonly ConsoleColor DefaultColor = Console.ForegroundColor;
@@ -18,7 +21,10 @@ namespace Main.WriteService.Writers
                 [MessageLevelEnum.Error] = ConsoleColor.Red
             };
         }
-
+        
+        /// <summary>
+        /// Вывести сообщение
+        /// </summary>
         public void Write(string message, MessageLevelEnum levelEnum = MessageLevelEnum.Text)
         {
             if (!_colorMap.TryGetValue(levelEnum, out var backgroundColor))

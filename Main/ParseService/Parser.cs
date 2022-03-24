@@ -18,6 +18,9 @@ namespace Main.ParseService
             _commandStorage = new CommandReflectionStorage();
         }
         
+        /// <summary>
+        /// Распарсить неразделённую строку аргументов
+        /// </summary>
         public ArgumentInfo ParseArguments(string argumentString)
         {
             var parsed = argumentString.Split(new[] {' ', '\t', '\n', '\r'},
@@ -25,6 +28,9 @@ namespace Main.ParseService
             return ParseArguments(parsed);
         }
 
+        /// <summary>
+        /// Распарсить разделённую строку аргументов
+        /// </summary>
         public ArgumentInfo ParseArguments(IList<string> arguments)
         {
             var parsedArguments = GetListOfCommands(arguments);
@@ -69,6 +75,12 @@ namespace Main.ParseService
             return argumentInfo;
         }
 
+        /// <summary>
+        /// Перегруперовать список аргументов в список [команда-её аргументы] 
+        /// </summary>
+        /// <param name="arguments">список аргументов</param>
+        /// <returns>список [команда-её аргументы]</returns>
+        /// <exception cref="ApplicationException">Первый аргумент должен являться командой</exception>
         private IList<(string commandName, string argument)> GetListOfCommands(IList<string> arguments)
         {
             var res = new List<(string, string)>();
@@ -108,6 +120,13 @@ namespace Main.ParseService
             return res;
         }
 
+        /// <summary>
+        /// Попытаться получить значение перечисления по атрибутам псевдонима
+        /// </summary>
+        /// <param name="option">псевдоним параметра</param>
+        /// <param name="result">результат парсинга</param>
+        /// <typeparam name="T">Тип перечисления</typeparam>
+        /// <returns>Удалось ли получить значение перечисления или нет</returns>
         private bool TryParseCommandOption<T>(string option, out T result) where T : Enum
         {
             if (option.StartsWith(CommandPrefix))
@@ -120,6 +139,12 @@ namespace Main.ParseService
             return dict.TryGetValue(option, out result);
         }
 
+        /// <summary>
+        /// Получить словарь [псевдоним-значение перечисления]
+        /// </summary>
+        /// <typeparam name="T">Тип перечисления</typeparam>
+        /// <returns>словарь</returns>
+        /// <exception cref="ApplicationException">Если для указанного перечисления заданы два одинаковых псевдонима</exception>
         private Dictionary<string, T> GetEnumAliases<T>() where T : Enum
         {
             var type = typeof(T);

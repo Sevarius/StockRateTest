@@ -1,5 +1,8 @@
 ﻿namespace Main.DataRepository
 {
+    /// <summary>
+    /// Внутреннее хранилище данных
+    /// </summary>
     public class InlineData
     {
         public static double[][] GetCurrencyValues()

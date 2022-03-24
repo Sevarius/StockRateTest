@@ -8,6 +8,9 @@ using Main.WriteService;
 
 namespace Main.CommandService.Commands
 {
+    /// <summary>
+    /// Обработчик команды выводы стоимости валют
+    /// </summary>
     [Alias("s")]
     [Alias("stock")]
     public class CurrencyCommand : BaseCommandHandler
@@ -20,6 +23,9 @@ namespace Main.CommandService.Commands
             _currencyRepository = new CurrencyRepository();
         }
         
+        /// <summary>
+        /// Вызов команды
+        /// </summary>
         public override void Invoke(string argument, IList<CommandOption> options)
         {
             var stockCurrencyList = GetStockCurrency(argument);
@@ -38,6 +44,11 @@ namespace Main.CommandService.Commands
             }
         }
 
+        /// <summary>
+        /// Получить валюты для покупки на бирже
+        /// </summary>
+        /// <param name="currenciesString">строка со списком валют</param>
+        /// <returns>список валют для покупки</returns>
         private IList<CurrencyEnum> GetStockCurrency(string currenciesString)
         {
             var currencyList = currenciesString.Split(" ", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
@@ -54,6 +65,11 @@ namespace Main.CommandService.Commands
             return stockCurrencyList;
         }
 
+        /// <summary>
+        /// Получить валюту покупателя
+        /// </summary>
+        /// <param name="options">список настроек</param>
+        /// <returns>валюта покупателя</returns>
         private CurrencyEnum GetPersonCurrency(IList<CommandOption> options)
         {
             var personCurrencyOption = options.FirstOrDefault(opt => opt.Option == CommandOptionEnum.Currency);
@@ -65,6 +81,12 @@ namespace Main.CommandService.Commands
             return personCurrency;
         }
 
+        /// <summary>
+        /// Парсинг строкового представления валюты
+        /// </summary>
+        /// <param name="currencyString">строка валюты</param>
+        /// <param name="currency">Вывод: полученная валюта</param>
+        /// <returns>удалось ли преобразовать строку в валюту</returns>
         private bool TryParseCurrency(string currencyString, out CurrencyEnum currency)
         {
             currency = DefaultCurrency;

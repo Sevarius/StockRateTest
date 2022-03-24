@@ -5,10 +5,16 @@ using Main.ParseService.Options;
 
 namespace Main.CommandService.Commands
 {
+    /// <summary>
+    /// Обработчик команды вызова помощи
+    /// </summary>
     [Alias("h")]
     [Alias("help")]
     public class HelpCommandHandler : BaseCommandHandler
     {
+        /// <summary>
+        /// Вызов команды
+        /// </summary>
         public override void Invoke(string argument, IList<CommandOption> options)
         {
             Console.WriteLine("Данная программа позволяет получить стоимость валюты при покупке её за другую валюту на бирже (все данные тестовые)");

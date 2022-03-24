@@ -7,21 +7,33 @@ using Main.ParseService;
 
 namespace Main.CommandService
 {
+    /// <summary>
+    /// Хранилище заданных команд
+    /// </summary>
     public class CommandReflectionStorage : ICommandStorage
     {
         private Dictionary<string, Type> _allCommands;
         
+        /// <summary>
+        /// Содержится ли в хранилище команда с данным псевдонимом
+        /// </summary>
         public bool ContainsCommand(string alias)
         {
             return GetAllCommandsNames().Contains(alias);
         }
         
+        /// <summary>
+        /// Получить псевдонимы всех команд
+        /// </summary>
         public IList<string> GetAllCommandsNames()
         {
             var allCommands = GetAllCommands();
             return allCommands.Keys.ToList();
         }
 
+        /// <summary>
+        /// Получить обработчик команды по его псевдониму
+        /// </summary>
         public ICommandHandler GetCommandHandler(string alias)
         {
             var allCommands = GetAllCommands();
@@ -41,6 +53,10 @@ namespace Main.CommandService
             return commandHandler;
         }
 
+        /// <summary>
+        /// Получить словарь [севдоним-команда]
+        /// </summary>
+        /// <returns></returns>
         private Dictionary<string, Type> GetAllCommands()
         {
             if (_allCommands == null)
@@ -51,6 +67,11 @@ namespace Main.CommandService
             return _allCommands;
         }
 
+        /// <summary>
+        /// Получить словарь [псевдоним-команда] с использование рефлексии
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException">Возникает, если были указаны два одинаковых псевдонима</exception>
         private Dictionary<string, Type> ReflectAllCommands()
         {
             Assembly myAssembly = Assembly.GetExecutingAssembly();
